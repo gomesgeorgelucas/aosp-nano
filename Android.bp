@@ -1,0 +1,67 @@
+cc_binary {
+    name: "nano",
+
+    srcs: [
+        "src/browser.c",
+        "src/chars.c",
+        "src/color.c",
+        "src/cut.c",
+        "src/files.c",
+        "src/global.c",
+        "src/help.c",
+        "src/history.c",
+        "src/move.c",
+        "src/nano.c",
+        "src/prompt.c",
+        "src/rcfile.c",
+        "src/search.c",
+        "src/text.c",
+        "src/utils.c",
+        "src/winio.c",
+    ],
+
+    include_dirs: [
+        "device/devtitans/kraken/external/libncurses/include",
+        "external/openssh/openbsd-compat",
+    ],
+
+    local_include_dirs: ["."],
+
+    cflags: [
+        "-DHAVE_CONFIG_H",
+        "-DLOCALEDIR=\"/data/locale\"",
+        "-DSYSCONFDIR=\"/system/etc/nano\"",
+        "-Wno-sign-compare",
+        "-Wno-unused-parameter"
+    ],
+
+    shared_libs: [
+        "libncurses",
+        "libssh",
+    ],
+
+    vendor: true,
+
+    required: ["nano_syntax", "nano_rc"],
+}
+
+prebuilt_etc {
+    name: "nano_syntax", //name
+    src: ["syntax/**/*.nanorc",], //origin
+    filename_from_src: true,
+    relative_install_path: "nano/syntax", //destination
+    system_ext_specific: true,
+}
+
+prebuilt_etc {
+    name: "nano_rc",
+    src: ["etc/nanorc"], //origin
+    filename_from_src: true,
+    relative_install_path: "nano", //destination
+    system_ext_specific: true,
+}
+
+genrule {
+    cmd = ["$(NANO_NANORC):$(nanorc_file) \n @echo \"Install: $@ -> $(NANO_ETC)\" @mkdir -p $(dir $@) $(hide) cp $< $@\],
+}
+
