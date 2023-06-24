@@ -42,26 +42,34 @@ cc_binary {
 
     vendor: true,
 
-    required: ["nano_syntax", "nano_rc"],
+    // required: ["nano_syntax", "nano_rc"],
 }
 
-prebuilt_etc {
-    name: "nano_syntax", //name
-    src: ["syntax/**/*.nanorc",], //origin
-    filename_from_src: true,
-    relative_install_path: "nano/syntax", //destination
-    system_ext_specific: true,
-}
+// prebuilt_etc {
 
-prebuilt_etc {
-    name: "nano_rc",
-    src: ["etc/nanorc"], //origin
-    filename_from_src: true,
-    relative_install_path: "nano", //destination
-    system_ext_specific: true,
-}
+//     name: "nano_syntax", //name
+//     srcs: ["syntax/**/*.nanorc"], //origin
+//     filename_from_src: true,
+//     relative_install_path: "nano/syntax", //destination
+//     system_ext_specific: true,
+// }
 
-genrule {
-    cmd = ["$(NANO_NANORC):$(nanorc_file) \n @echo \"Install: $@ -> $(NANO_ETC)\" @mkdir -p $(dir $@) $(hide) cp $< $@\],
-}
+// prebuilt_etc {
+//     name: "nano_rc",
+//     src: "etc/nanorc", //origin
+//     filename_from_src: true,
+//     relative_install_path: "nano", //destination
+//     system_ext_specific: true,
+// }
+
+// genrule {
+//     cmd = ["$(NANO_NANORC):$(nanorc_file) \n @echo \"Install: $@ -> $(NANO_ETC)\" @mkdir -p $(dir $@) $(hide) cp $< $@\],
+// }
+
+// NANO_SYNTAX = ""
+// NANO_NANORC = ""
+// ALL_DEFAULT_INSTALLED_MODULES += NANO_SYNTAX + NANO_NANORC
+
+// ANDROIDMK TRANSLATION ERROR: unsupported non-const variable name
+// ALL_MODULES.$(LOCAL_MODULE).INSTALLED := $(ALL_MODULES.$(LOCAL_MODULE).INSTALLED) $(NANO_SYNTAX)  	$(ALL_MODULES.$(LOCAL_MODULE).INSTALLED) $(NANO_NANORC)
 
